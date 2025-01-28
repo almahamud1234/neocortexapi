@@ -6,10 +6,7 @@ using System.Text;
 
 namespace AnomalyDetectionSample
 {
-    /// <summary>
-    /// This class is responsible for testing an HTM model.
-    /// CSV files from both training(learning) and predicting folders will be used for training our HTM Model.
-    /// </summary>
+
     public class HTMAnomalyExperiment
     {
 
