@@ -15,6 +15,10 @@ namespace AnomalyDetectionSample
     {
         private readonly string _trainingCSVFolderPath;
         private readonly string _predictingCSVFolderPath;
+        private static double _totalAccuracy = 0.0;
+        private static int _iterationCount = 0;
+        private readonly double _tolerance = 0.1;
+
 
         /// <summary>
         /// Initializes a new instance of the HTMAnomalyExperiment class with default folder paths.
@@ -35,6 +39,10 @@ namespace AnomalyDetectionSample
             Predictor predictor;
 
             htmModel.ExecuteHTMModelTraining(_trainingCSVFolderPath, _predictingCSVFolderPath, out predictor);
+
+            Console.WriteLine();
+            Console.WriteLine("Starting the anomaly detection experiment...");
+            Console.WriteLine();
 
             CsvSequenceFolder testSequencesReader = new CsvSequenceFolder(_predictingCSVFolderPath);
             var inputSequences = testSequencesReader.ExtractSequencesFromFolder();
