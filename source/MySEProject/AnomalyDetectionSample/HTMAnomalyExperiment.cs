@@ -15,9 +15,6 @@ namespace AnomalyDetectionSample
     {
         private readonly string _trainingCSVFolderPath;
         private readonly string _predictingCSVFolderPath;
-        private static double _totalAccuracy = 0.0;
-        private static int _iterationCount = 0;
-        private readonly double _tolerance = 0.1;
 
         /// <summary>
         /// Initializes a new instance of the HTMAnomalyExperiment class with default folder paths.
@@ -87,16 +84,7 @@ namespace AnomalyDetectionSample
             Console.WriteLine("Anomaly detection experiment completed.");
         }
 
-        /// <summary>
-        /// Detects anomalies in the input list using the HTM trained model.
-        /// The anomaly score is calculated using a sliding window approach.
-        /// The difference between the predicted value and the actual value is used to calculate the anomaly score.
-        /// If the difference exceeds a certain tolerance set earlier, anomaly is detected.
-        /// Returns the result in a list of strings
-        /// </summary>
-        /// <param name="predictor">Trained HTM model, used for prediction.</param>
-        /// <param name="list">Input list which will be used to detect anomalies.</param>
-        /// <param name="tolerance">Tolerance value ratio can be overloaded from outside. Default is 0.1</param>
+     
         private List<string> DetectAnomaly(Predictor predictor, double[] sequence, double tolerance = 0.1)
         {
             if (sequence.Length < 2)
@@ -170,10 +158,6 @@ namespace AnomalyDetectionSample
 
             var averageSequenceAccuracy = currentAccuracy / sequence.Length;
 
-            resultOutputLines.Add("");
-            resultOutputLines.Add($"Average accuracy for this sequence: {averageSequenceAccuracy}%.");
-            resultOutputLines.Add("");
-            resultOutputLines.Add("------------------------------");
 
             _totalAccuracy += averageSequenceAccuracy;
             _iterationCount++;
