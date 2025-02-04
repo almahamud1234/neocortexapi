@@ -25,12 +25,6 @@ namespace AnomalyDetectionSample
         /// </summary>
         /// <param name="trainingFolderPath">The path to the training folder containing CSV files.</param>
         /// <param name="predictingFolderPath">The path to the predicting folder containing CSV files.</param>
-        public HTMAnomalyExperiment(string trainingFolderPath = "anomaly_training", string predictingFolderPath = "anomaly_predicting")
-        {
-            string projectBaseDirectory = Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName;
-            _trainingCSVFolderPath = Path.Combine(projectBaseDirectory, trainingFolderPath);
-            _predictingCSVFolderPath = Path.Combine(projectBaseDirectory, predictingFolderPath);
-        }
 
    
         public void ExecuteExperiment()
