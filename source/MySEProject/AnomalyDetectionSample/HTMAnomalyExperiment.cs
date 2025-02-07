@@ -60,22 +60,6 @@ namespace AnomalyDetectionSample
 
             List<List<string>> experimentOutputList = new List<List<string>>();
 
-            foreach (List<double> sequence in trimmedInputSequences)
-            {
-                double[] sequenceArray = sequence.ToArray();
-                List<string> sequenceOutputLines = new List<string>();
-
-                try
-                {
-                    sequenceOutputLines = DetectAnomaly(predictor, sequenceArray, _tolerance);
-                }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine($"Exception caught: {ex.Message}");
-                }
-
-                experimentOutputList.Add(sequenceOutputLines);
-            }
 
             StringBuilder stringBuilder = new StringBuilder();
 
