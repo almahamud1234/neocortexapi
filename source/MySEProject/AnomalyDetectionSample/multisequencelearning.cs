@@ -13,7 +13,7 @@ namespace AnomalyDetectionSample
         public Predictor Run(Dictionary<string, List<double>> sequences)
         {
 
-            int inputBits = 110;
+            int inputBits = 121;
             int numColumns = 1210;
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
@@ -46,16 +46,7 @@ namespace AnomalyDetectionSample
             double max = 100;
 
             Dictionary<string, object> settings = new Dictionary<string, object>()
-            {
-                { "W", 21},
-                { "N", inputBits},
-                { "Radius", -1.0},
-                { "MinVal", 0.0},
-                { "Periodic", false},
-                { "Name", "integer"},
-                { "ClipInput", false},
-                { "MaxVal", max}
-            };
+    
 
             EncoderBase encoder = new ScalarEncoder(settings);
 
@@ -124,11 +115,8 @@ namespace AnomalyDetectionSample
 
             var lastPredictedValues = new List<string>(new string[] { "0" });
 
-            int maxCycles = 120;
+            int maxCycles = 130;
 
-            //
-            // Training SP to get stable. New-born stage.
-            //
 
             for (int i = 0; i < maxCycles && isInStableState == false; i++)
             {
@@ -281,10 +269,6 @@ namespace AnomalyDetectionSample
                 }
             }
 
-            Debug.WriteLine("------------ END ------------");
-
-            return new Predictor(layer1, mem, cls);
-        }
 
 
         /// <summary>
