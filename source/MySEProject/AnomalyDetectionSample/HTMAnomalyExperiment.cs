@@ -13,8 +13,6 @@ namespace AnomalyDetectionSample
 
     public class HTMAnomalyExperiment
     {
-        private readonly string _trainingCSVFolderPath;
-        private readonly string _predictingCSVFolderPath;
         private static double _totalAccuracy = 0.0;
         private static int _iterationCount = 0;
         private readonly double _tolerance = 0.1;
@@ -26,11 +24,7 @@ namespace AnomalyDetectionSample
         /// <param name="trainingFolderPath">The path to the training folder containing CSV files.</param>
         /// <param name="predictingFolderPath">The path to the predicting folder containing CSV files.</param>
         public HTMAnomalyExperiment(string trainingFolderPath = "anomaly_training", string predictingFolderPath = "anomaly_predicting")
-        {
-            string projectBaseDirectory = Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName;
-            _trainingCSVFolderPath = Path.Combine(projectBaseDirectory, trainingFolderPath);
-            _predictingCSVFolderPath = Path.Combine(projectBaseDirectory, predictingFolderPath);
-        }
+
 
         /// <summary>
         /// Executes the anomaly detection experiment using the HTM model.
@@ -43,9 +37,6 @@ namespace AnomalyDetectionSample
 
             htmModel.ExecuteHTMModelTraining(_trainingCSVFolderPath, _predictingCSVFolderPath, out predictor);
 
-            Console.WriteLine();
-            Console.WriteLine("Starting the anomaly detection experiment...");
-            Console.WriteLine();
 
             CsvSequenceFolder testSequencesReader = new CsvSequenceFolder(_predictingCSVFolderPath);
             var inputSequences = testSequencesReader.ExtractSequencesFromFolder();
@@ -74,9 +65,6 @@ namespace AnomalyDetectionSample
             File.WriteAllText(outputFilePath, stringBuilder.ToString());
 
             StoredOutputValues.totalAvgAccuracy = _totalAccuracy / _iterationCount;
-
-            Console.WriteLine("Experiment results have been written to the text file.");
-            Console.WriteLine("Anomaly detection experiment completed.");
         }
 
      
