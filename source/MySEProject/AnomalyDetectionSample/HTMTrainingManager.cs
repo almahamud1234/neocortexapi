@@ -11,7 +11,6 @@ namespace AnomalyDetectionSample
         public void ExecuteHTMModelTraining(string trainingFolderPath, string predictionFolderPath, out Predictor trainedPredictor)
         {
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
 
             CsvSequenceFolder trainingReader = new CsvSequenceFolder(trainingFolderPath);
             var trainingSequences = trainingReader.ExtractSequencesFromFolder();
@@ -23,10 +22,6 @@ namespace AnomalyDetectionSample
             // Combine sequences from both training and prediction folders
             List<List<double>> combinedSequences = new List<List<double>>(trainingSequences);
             combinedSequences.AddRange(predictionSequences);
-
-            // Convert sequences to HTM input format
-            CSVToHTMInputConverter sequenceConverter = new CSVToHTMInputConverter();
-            var htmInput = sequenceConverter.ConvertToHTMInput(combinedSequences);
 
             // Start multi-sequence learning experiment to generate predictor model
             MultiSequenceLearning learningAlgorithm = new MultiSequenceLearning();
