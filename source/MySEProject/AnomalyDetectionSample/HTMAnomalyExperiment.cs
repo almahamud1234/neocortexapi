@@ -35,7 +35,8 @@ namespace AnomalyDetectionSample
         /// </summary>
         public void ExecuteExperiment()
         {
-
+            HTMTrainingManager htmModel = new HTMTrainingManager();
+            Predictor predictor;
 
             htmModel.ExecuteHTMModelTraining(_trainingCSVFolderPath, _predictingCSVFolderPath, out predictor);
 
@@ -124,6 +125,7 @@ namespace AnomalyDetectionSample
                 ""
             };
 
+            double currentAccuracy = 0.0;
 
             for (int i = 0; i < sequence.Length; i++)
             {
@@ -171,6 +173,7 @@ namespace AnomalyDetectionSample
                 }
             }
 
+            var averageSequenceAccuracy = currentAccuracy / sequence.Length;
 
             resultOutputLines.Add("");
             resultOutputLines.Add($"Average accuracy for this sequence: {averageSequenceAccuracy}%.");
