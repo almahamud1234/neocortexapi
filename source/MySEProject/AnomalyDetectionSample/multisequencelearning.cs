@@ -7,9 +7,15 @@ using System.Diagnostics;
 
 namespace AnomalyDetectionSample
 {
+    /// <summary>
+    /// Implements an experiment that demonstrates how to learn sequences.
+    /// </summary>
     public class MultiSequenceLearning
     {
-       
+        /// <summary>
+        /// Runs the learning of sequences.
+        /// </summary>
+        /// <param name="sequences">Dictionary of sequences. KEY is the sequence name, the VALUE is the list of element of the sequence.</param>
         public Predictor Run(Dictionary<string, List<double>> sequences)
         {
 
@@ -46,7 +52,16 @@ namespace AnomalyDetectionSample
             double max = 100;
 
             Dictionary<string, object> settings = new Dictionary<string, object>()
-    
+            {
+                { "W", 21},
+                { "N", inputBits},
+                { "Radius", -1.0},
+                { "MinVal", 0.0},
+                { "Periodic", false},
+                { "Name", "integer"},
+                { "ClipInput", false},
+                { "MaxVal", max}
+            };
 
             EncoderBase encoder = new ScalarEncoder(settings);
 
@@ -115,8 +130,11 @@ namespace AnomalyDetectionSample
 
             var lastPredictedValues = new List<string>(new string[] { "0" });
 
-            int maxCycles = 130;
+            int maxCycles = 100;
 
+            //
+            // Training SP to get stable. New-born stage.
+            //
 
             for (int i = 0; i < maxCycles && isInStableState == false; i++)
             {
@@ -185,6 +203,12 @@ namespace AnomalyDetectionSample
                         previousInputs.Add(input.ToString());
                         if (previousInputs.Count > (maxPrevInputs + 1))
                             previousInputs.RemoveAt(0);
+
+                        // In the pretrained SP with HPC, the TM will quickly learn cells for patterns
+                        // In that case the starting sequence 4-5-6 might have the sam SDR as 1-2-3-4-5-6,
+                        // Which will result in returning of 4-5-6 instead of 1-2-3-4-5-6.
+                        // HtmClassifier allways return the first matching sequence. Because 4-5-6 will be as first
+                        // memorized, it will match as the first one.
                         if (previousInputs.Count < maxPrevInputs)
                             continue;
 
@@ -269,6 +293,10 @@ namespace AnomalyDetectionSample
                 }
             }
 
+            Debug.WriteLine("------------ END ------------");
+
+            return new Predictor(layer1, mem, cls);
+        }
 
 
         /// <summary>
@@ -289,6 +317,16 @@ namespace AnomalyDetectionSample
             return num;
         }
 
+
+        /// <summary>
+        /// Constracts the unique key of the element of an sequece. This key is used as input for HtmClassifier.
+        /// It makes sure that alle elements that belong to the same sequence are prefixed with the sequence.
+        /// The prediction code can then extract the sequence prefix to the predicted element.
+        /// </summary>
+        /// <param name="prevInputs"></param>
+        /// <param name="input"></param>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
         private static string GetKey(List<string> prevInputs, double input, string sequence)
         {
             string key = String.Empty;
