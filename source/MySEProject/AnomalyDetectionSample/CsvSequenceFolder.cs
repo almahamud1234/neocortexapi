@@ -13,11 +13,21 @@ namespace AnomalyDetectionSample
         private readonly string _folderPath;
 
         /// <summary>
-        /// Initializes a new instance of the CsvSequenceProcessor class with the provided folder path.
+        /// Initializes a new instance of the CsvSequenceFolder class with the provided folder path.
         /// </summary>
         /// <param name="folderPath">The path to the folder containing the CSV files.</param>
         public CsvSequenceFolder(string folderPath)
         {
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                throw new ArgumentException("Folder path cannot be null or empty.", nameof(folderPath));
+            }
+
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException($"Directory not found: {folderPath}");
+            }
+
             _folderPath = folderPath;
         }
 
@@ -27,35 +37,66 @@ namespace AnomalyDetectionSample
         /// <returns>A list of sequences contained in the CSV files present in the folder.</returns>
         public List<List<double>> ExtractSequencesFromFolder()
         {
-            List<List<double>> folderSequences = new List<List<double>>();
-            string[] fileEntries = Directory.GetFiles(_folderPath, "*.csv");
+            var folderSequences = new List<List<double>>();
+            var fileEntries = Directory.GetFiles(_folderPath, "*.csv");
 
-            foreach (string fileName in fileEntries)
+            if (fileEntries.Length == 0)
             {
-                string[] csvLines = File.ReadAllLines(fileName);
-                List<List<double>> sequencesInFile = new List<List<double>>();
-
-                foreach (string line in csvLines)
-                {
-                    string[] columns = line.Split(',');
-                    List<double> sequence = new List<double>();
-
-                    foreach (string column in columns)
-                    {
-                        if (double.TryParse(column, out double value))
-                        {
-                            sequence.Add(value);
-                        }
-                        else
-                        {
-                            throw new ArgumentException($"Non-numeric value found! Please check file: {fileName}.");
-                        }
-                    }
-                    sequencesInFile.Add(sequence);
-                }
-                folderSequences.AddRange(sequencesInFile);
+                Console.WriteLine("No CSV files found in the directory.");
+                return folderSequences;
             }
+
+            foreach (var fileName in fileEntries)
+            {
+                try
+                {
+                    var csvLines = File.ReadAllLines(fileName);
+                    var sequencesInFile = ParseCsvLines(csvLines, fileName);
+                    folderSequences.AddRange(sequencesInFile);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error reading file {fileName}: {ex.Message}");
+                }
+            }
+
             return folderSequences;
+        }
+
+        /// <summary>
+        /// Parses the CSV lines into a list of sequences of doubles.
+        /// </summary>
+        /// <param name="csvLines">Lines read from the CSV file.</param>
+        /// <param name="fileName">The name of the file being processed.</param>
+        /// <returns>A list of sequences from the CSV file.</returns>
+        private List<List<double>> ParseCsvLines(string[] csvLines, string fileName)
+        {
+            var sequences = new List<List<double>>();
+
+            foreach (var line in csvLines)
+            {
+                var columns = line.Split(',');
+
+                var sequence = new List<double>();
+                foreach (var column in columns)
+                {
+                    if (double.TryParse(column, out double value))
+                    {
+                        sequence.Add(value);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Warning: Non-numeric value found in file {fileName}. Skipping invalid value: {column}");
+                    }
+                }
+
+                if (sequence.Count > 0)
+                {
+                    sequences.Add(sequence);
+                }
+            }
+
+            return sequences;
         }
 
         /// <summary>
@@ -63,16 +104,18 @@ namespace AnomalyDetectionSample
         /// </summary>
         public void DisplayCsvSequences()
         {
-            List<List<double>> sequences = ExtractSequencesFromFolder();
+            var sequences = ExtractSequencesFromFolder();
+
+            if (sequences.Count == 0)
+            {
+                Console.WriteLine("No sequences to display.");
+                return;
+            }
 
             for (int i = 0; i < sequences.Count; i++)
             {
                 Console.Write($"Sequence {i + 1}: ");
-                foreach (double number in sequences[i])
-                {
-                    Console.Write($"{number} ");
-                }
-                Console.WriteLine();
+                Console.WriteLine(string.Join(" ", sequences[i]));
             }
         }
 
@@ -83,14 +126,21 @@ namespace AnomalyDetectionSample
         /// <returns>A new list of trimmed sequences.</returns>
         public static List<List<double>> TrimSequences(List<List<double>> sequences)
         {
-            Random random = new Random();
-            List<List<double>> trimmedSequences = new List<List<double>>();
+            var random = new Random();
+            var trimmedSequences = new List<List<double>>();
 
-            foreach (List<double> sequence in sequences)
+            foreach (var sequence in sequences)
             {
-                int numElementsToRemove = random.Next(1, 5);
-                List<double> trimmedSequence = sequence.Skip(numElementsToRemove).ToList();
-                trimmedSequences.Add(trimmedSequence);
+                if (sequence.Count > 4)
+                {
+                    int numElementsToRemove = random.Next(1, 5);
+                    var trimmedSequence = sequence.Skip(numElementsToRemove).ToList();
+                    trimmedSequences.Add(trimmedSequence);
+                }
+                else
+                {
+                    trimmedSequences.Add(new List<double>(sequence)); // Copy sequence if it's too small to trim
+                }
             }
 
             return trimmedSequences;
