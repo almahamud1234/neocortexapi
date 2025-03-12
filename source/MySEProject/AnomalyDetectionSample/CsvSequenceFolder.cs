@@ -6,19 +6,22 @@ using System.Linq;
 namespace AnomalyDetectionSample
 {
     /// <summary>
-    /// Utility class for reading and processing CSV files from a specified folder.
+    /// Utility class for reading, processing, and displaying numerical sequences from CSV files in a specified folder.
     /// </summary>
     public class CsvSequenceFolder
     {
         private readonly string _folderPath;
 
         /// <summary>
-        /// Initializes a new instance of the CsvSequenceFolder class with the provided folder path.
+        /// Initializes a new instance of the <see cref="CsvSequenceFolder"/> class with the provided folder path.
+        /// Validates if the folder exists before proceeding.
         /// </summary>
         /// <param name="folderPath">The path to the folder containing the CSV files.</param>
+        /// <exception cref="ArgumentException">Thrown when folderPath is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown when the specified folder does not exist.</exception>
         public CsvSequenceFolder(string folderPath)
         {
-            if (string.IsNullOrEmpty(folderPath))
+            if (string.IsNullOrWhiteSpace(folderPath))
             {
                 throw new ArgumentException("Folder path cannot be null or empty.", nameof(folderPath));
             }
@@ -32,15 +35,15 @@ namespace AnomalyDetectionSample
         }
 
         /// <summary>
-        /// Reads all CSV files in the specified folder and returns their contents as a list of sequences.
+        /// Reads all CSV files in the specified folder and extracts numerical sequences from them.
         /// </summary>
-        /// <returns>A list of sequences contained in the CSV files present in the folder.</returns>
+        /// <returns>A list of numerical sequences extracted from the CSV files.</returns>
         public List<List<double>> ExtractSequencesFromFolder()
         {
             var folderSequences = new List<List<double>>();
             var fileEntries = Directory.GetFiles(_folderPath, "*.csv");
 
-            if (fileEntries.Length == 0)
+            if (!fileEntries.Any())
             {
                 Console.WriteLine("No CSV files found in the directory.");
                 return folderSequences;
@@ -64,11 +67,12 @@ namespace AnomalyDetectionSample
         }
 
         /// <summary>
-        /// Parses the CSV lines into a list of sequences of doubles.
+        /// Parses the content of a CSV file into numerical sequences.
+        /// Ignores any non-numeric values and logs warnings.
         /// </summary>
-        /// <param name="csvLines">Lines read from the CSV file.</param>
+        /// <param name="csvLines">The lines read from a CSV file.</param>
         /// <param name="fileName">The name of the file being processed.</param>
-        /// <returns>A list of sequences from the CSV file.</returns>
+        /// <returns>A list of numerical sequences extracted from the CSV file.</returns>
         private List<List<double>> ParseCsvLines(string[] csvLines, string fileName)
         {
             var sequences = new List<List<double>>();
@@ -76,8 +80,8 @@ namespace AnomalyDetectionSample
             foreach (var line in csvLines)
             {
                 var columns = line.Split(',');
-
                 var sequence = new List<double>();
+
                 foreach (var column in columns)
                 {
                     if (double.TryParse(column, out double value))
@@ -100,7 +104,7 @@ namespace AnomalyDetectionSample
         }
 
         /// <summary>
-        /// Outputs the sequences extracted from the CSV files in the specified folder to the console.
+        /// Displays all extracted sequences from CSV files in the console.
         /// </summary>
         public void DisplayCsvSequences()
         {
@@ -114,16 +118,16 @@ namespace AnomalyDetectionSample
 
             for (int i = 0; i < sequences.Count; i++)
             {
-                Console.Write($"Sequence {i + 1}: ");
-                Console.WriteLine(string.Join(" ", sequences[i]));
+                Console.WriteLine($"Sequence {i + 1}: {string.Join(" ", sequences[i])}");
             }
         }
 
         /// <summary>
-        /// Trims a random number of elements (between 1 and 4) from the beginning of each sequence in a list of sequences.
+        /// Trims a random number of elements (between 1 and 4) from the beginning of each sequence.
+        /// Ensures sequences with fewer than 5 elements remain unchanged.
         /// </summary>
         /// <param name="sequences">The list of sequences to trim.</param>
-        /// <returns>A new list of trimmed sequences.</returns>
+        /// <returns>A new list of sequences with trimmed elements.</returns>
         public static List<List<double>> TrimSequences(List<List<double>> sequences)
         {
             var random = new Random();
@@ -131,16 +135,9 @@ namespace AnomalyDetectionSample
 
             foreach (var sequence in sequences)
             {
-                if (sequence.Count > 4)
-                {
-                    int numElementsToRemove = random.Next(1, 5);
-                    var trimmedSequence = sequence.Skip(numElementsToRemove).ToList();
-                    trimmedSequences.Add(trimmedSequence);
-                }
-                else
-                {
-                    trimmedSequences.Add(new List<double>(sequence)); // Copy sequence if it's too small to trim
-                }
+                // Ensure sequence has enough elements to trim
+                int numElementsToRemove = sequence.Count > 4 ? random.Next(1, 5) : 0;
+                trimmedSequences.Add(sequence.Skip(numElementsToRemove).ToList());
             }
 
             return trimmedSequences;
