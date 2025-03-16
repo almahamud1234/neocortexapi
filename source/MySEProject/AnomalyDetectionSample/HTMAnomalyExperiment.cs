@@ -9,6 +9,8 @@ namespace AnomalyDetectionSample
         private static double _totalAccuracy = 0.0;
         private static int _iterationCount = 0;
         private readonly double _tolerance;
+        List<double[]> allData = new List<double[]>();
+        List<List<int>> allAnomalyIndices = new List<List<int>>();
 
         public HTMAnomalyExperiment(string trainingFolderPath = "anomaly_training", string predictingFolderPath = "anomaly_predicting", double tolerance = 0.1)
         {
@@ -42,16 +44,20 @@ namespace AnomalyDetectionSample
 
             foreach (var sequence in trimmedInputSequences)
             {
-                experimentResults.AddRange(DetectAnomalyOnSequence(predictor, sequence.ToArray(), _tolerance));
+                allData.Add(sequence.ToArray());
+                var (log, anomalies) = DetectAnomalyOnSequence(predictor, sequence.ToArray(), _tolerance);
+                experimentResults.AddRange(log);
+                allAnomalyIndices.Add(anomalies);
             }
 
             File.WriteAllLines(outputFilePath, experimentResults);
             StoredOutputValues.totalAvgAccuracy = _totalAccuracy / Math.Max(_iterationCount, 1);
+            AnomalyVisualizer.CreateGraphForAnomalies(allData, allAnomalyIndices);
 
             Console.WriteLine("Experiment results have been written to: " + outputFilePath);
         }
 
-        private List<string> DetectAnomalyOnSequence(Predictor predictor, double[] sequence, double tolerance)
+        private Tuple<List<string>, List<int>> DetectAnomalyOnSequence(Predictor predictor, double[] sequence, double tolerance)
         {
             if (sequence.Length < 2)
                 throw new ArgumentException($"Sequence must contain at least two values. Sequence: [{string.Join(",", sequence)}]");
@@ -71,6 +77,7 @@ namespace AnomalyDetectionSample
             };
 
             double currentAccuracy = 0.0;
+            var anomalousIndex = new List<int>();
 
             for (int i = 0; i < sequence.Length; i++)
             {
@@ -102,6 +109,7 @@ namespace AnomalyDetectionSample
                         else
                         {
                             resultOutputLines.Add($"****Anomaly detected**** in the next element. HTM Engine predicted: {predictedNextItem} with similarity: {similarity}%, actual value: {nextItem}.");
+                            anomalousIndex.Add(i + 1);
                             i++; // Skip the anomalous element
                             resultOutputLines.Add("Skipping to the next element in the testing sequence.");
                             currentAccuracy += similarity;
@@ -126,7 +134,7 @@ namespace AnomalyDetectionSample
             _iterationCount++;
 
             WriteOutput(predictor, sequence, tolerance);
-            return resultOutputLines;
+            return Tuple.Create(resultOutputLines, anomalousIndex);
         }
 
         private void WriteOutput(Predictor predictor, double[] sequence, double tolerance)
