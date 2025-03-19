@@ -26,12 +26,14 @@ Our project is based on NeoCortex API. More details [here](https://github.com/dd
 
 Here is the working principle in a single graph to understand the steps to follow to execute and develop this project. [For more details click here]()
 
+```mermaid
 graph LR;
     StartProject --> ExtractSequences;
     ExtractSequences --> ConvertSequences;
     ConvertSequences --> TrainModel;
     TrainModel --> AnomalyDetection;
     AnomalyDetection --> StoreOutput;
+```
 
 # Details
 
