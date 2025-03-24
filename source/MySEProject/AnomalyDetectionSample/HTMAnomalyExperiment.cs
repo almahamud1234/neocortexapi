@@ -9,10 +9,11 @@ namespace AnomalyDetectionSample
         private static double _totalAccuracy = 0.0;
         private static int _iterationCount = 0;
         private readonly double _tolerance;
-        List<double[]> allData = new List<double[]>();
+        List<double[]> allTestingData = new List<double[]>();
+        List<double[]> allLearnedData = new List<double[]>();
         List<List<int>> allAnomalyIndices = new List<List<int>>();
 
-        public HTMAnomalyExperiment(string trainingFolderPath = "anomaly_training", string predictingFolderPath = "anomaly_predicting", double tolerance = 0.1)
+        public HTMAnomalyExperiment(string trainingFolderPath = "training_sequence", string predictingFolderPath = "predicting_sequence", double tolerance = 0.2)
         {
             _tolerance = tolerance;
             var projectBaseDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
@@ -42,9 +43,14 @@ namespace AnomalyDetectionSample
             string outputFilePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName, "output", $"anomaly_output_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
             List<string> experimentResults = new List<string>();
 
+            foreach (var sequence in inputSequences)
+            {
+                allLearnedData.Add(sequence.ToArray());
+            }
+
             foreach (var sequence in trimmedInputSequences)
             {
-                allData.Add(sequence.ToArray());
+                allTestingData.Add(sequence.ToArray());
                 var (log, anomalies) = DetectAnomalyOnSequence(predictor, sequence.ToArray(), _tolerance);
                 experimentResults.AddRange(log);
                 allAnomalyIndices.Add(anomalies);
@@ -52,7 +58,9 @@ namespace AnomalyDetectionSample
 
             File.WriteAllLines(outputFilePath, experimentResults);
             StoredOutputValues.totalAvgAccuracy = _totalAccuracy / Math.Max(_iterationCount, 1);
-            AnomalyVisualizer.CreateGraphForAnomalies(allData, allAnomalyIndices);
+            AnomalyVisualizer.CreateGraphForAnomalies(allTestingData, allAnomalyIndices);
+            SequenceVisualizer.CreateGraphForSequences(allLearnedData, allTestingData);
+            SequenceVisualizer.CreateBothSequenceWithAnomalies(allLearnedData, allTestingData, allAnomalyIndices);
 
             Console.WriteLine("Experiment results have been written to: " + outputFilePath);
         }

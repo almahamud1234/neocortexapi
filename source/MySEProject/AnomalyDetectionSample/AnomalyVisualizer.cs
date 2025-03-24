@@ -19,7 +19,7 @@ namespace AnomalyDetectionSample
                     x = Enumerable.Range(0, data.Length).ToArray(),
                     y = data,
                     mode = "lines",
-                    name = "Sequence" + (i+1)
+                    name = "Testing Sequence" + (i+1)
                 };
 
                 var anomalies = new Scatter
@@ -36,9 +36,20 @@ namespace AnomalyDetectionSample
             }
 
             var chart = Chart.Plot(allGraphs.Concat(allAnomalies));
-            chart.WithTitle("Anomalies in sequences");
+            chart.WithTitle("Anomalies in Testing sequences");
             chart.WithXTitle("X-axis(Anomaly Indexes inside Sequence)");
             chart.WithYTitle("Y-axis(Value of Sequence)");
+
+            // Define the output directory and file path
+            string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
+            string outputDirectory = Path.Combine(projectRoot!, "output", "graph");
+            Directory.CreateDirectory(outputDirectory); // Ensure directory exists
+
+            string filePath = Path.Combine(outputDirectory, $"Testing_Sequence_Anomaly_{DateTime.Now:yyyyMMdd_HHmmss}.html");
+
+            // Save the chart as an HTML file
+            File.WriteAllText(filePath, chart.GetHtml());
+
             chart.Show();
         }
 
