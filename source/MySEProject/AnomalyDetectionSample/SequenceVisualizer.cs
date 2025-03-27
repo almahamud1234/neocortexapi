@@ -55,7 +55,7 @@ namespace AnomalyDetectionSample
             // Define output directory and file path
             string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
             string outputDirectory = Path.Combine(projectRoot!, "output", "graph");
-            Directory.CreateDirectory(outputDirectory); // Ensure directory exists
+            Directory.CreateDirectory(outputDirectory); 
 
             string filePath = Path.Combine(outputDirectory, $"Actual_Testing_Sequence_{DateTime.Now:yyyyMMdd_HHmmss}.html");
 
@@ -100,7 +100,7 @@ namespace AnomalyDetectionSample
                     y = learnedData,
                     mode = "lines",
                     name = $"Learned Sequence {i + 1}",
-                    line = new Line { color = "olive", dash = "dashdot" } // Dashed line for learned data
+                    line = new Line { color = "green", dash = "dashdot" } // Dashed line for learned data
                 };
 
                 allGraphs.Add(actualGraph);
@@ -113,7 +113,7 @@ namespace AnomalyDetectionSample
                     y = anomalyIndices.Select(idx => data[idx]).ToArray(),
                     mode = "markers",
                     name = $"Anomalies in Sequence {i + 1}",
-                    marker = new Marker { color = "crimson", size = 8 }
+                    marker = new Marker { color = "red", size = 8 }
                 };
 
                 allAnomalies.Add(anomalyGraph);

@@ -1,0 +1,379 @@
+------------------------------
+
+Testing the sequence for anomaly detection: 33, 27, 32, 29, 36, 25.
+
+Current element in the testing sequence: 33
+No anomaly detected in the next element. HTM Engine found similarity: 33.33%.
+Current element in the testing sequence: 27
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 32
+No anomaly detected in the next element. HTM Engine found similarity: 20.83%.
+Current element in the testing sequence: 29
+No anomaly detected in the next element. HTM Engine found similarity: 50%.
+Current element in the testing sequence: 36
+****Anomaly detected**** in the next element. HTM Engine predicted: 40 with similarity: 8.33%, actual value: 25.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 18.74833333333333%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 45, 21, 37, 26, 31, 25, 39, 31.
+
+Current element in the testing sequence: 45
+****Anomaly detected**** in the next element. HTM Engine predicted: 29 with similarity: 50%, actual value: 21.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 37
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 70.83%, actual value: 26.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 31
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 4.17%, actual value: 25.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 31.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 26.041249999999998%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 68, 33, 32, 25, 33, 27.
+
+Current element in the testing sequence: 68
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 33
+No anomaly detected in the next element. HTM Engine found similarity: 33.33%.
+Current element in the testing sequence: 32
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 25
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 33
+No anomaly detected in the next element. HTM Engine found similarity: 33.33%.
+Current element in the testing sequence: 27
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 11.11%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 24, 16, 22, 15, 23, 14, 21, 14.
+
+Current element in the testing sequence: 24
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 16
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 22
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 15
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 23
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 14
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 21
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 14
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 0%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 14, 22, 15, 17, 2, 22, 15, 24, 17.
+
+Current element in the testing sequence: 14
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 22
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 15
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 17
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 2
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 22
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 15
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 24
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 17
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 0%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 18, 1, 19, 29, 21, 30, 20.
+
+Current element in the testing sequence: 18
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 1
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 19
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 29
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 66.67%, actual value: 21.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 30
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 20
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 9.524285714285714%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 21, 70, 22, 29, 17, 23, 15.
+
+Current element in the testing sequence: 21
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 70
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 22
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 29
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 66.67%, actual value: 17.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 23
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 15
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 9.524285714285714%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 40, 33, 42, 35, 39, 30.
+
+Current element in the testing sequence: 40
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 33.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 42
+****Anomaly detected**** in the next element. HTM Engine predicted: 46 with similarity: 29.17%, actual value: 35.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 30.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 32.63833333333333%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 67, 38, 29, 39, 28, 44, 33.
+
+Current element in the testing sequence: 67
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 38
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 79.17%, actual value: 29.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 46 with similarity: 29.17%, actual value: 28.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 44
+****Anomaly detected**** in the next element. HTM Engine predicted: 40 with similarity: 20.83%, actual value: 33.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 18.452857142857145%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 30, 38, 58, 35, 27, 36, 25.
+
+Current element in the testing sequence: 30
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 38
+No anomaly detected in the next element. HTM Engine found similarity: 79.17%.
+Current element in the testing sequence: 58
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 35
+No anomaly detected in the next element. HTM Engine found similarity: 8.33%.
+Current element in the testing sequence: 27
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 36
+****Anomaly detected**** in the next element. HTM Engine predicted: 40 with similarity: 8.33%, actual value: 25.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 13.69%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 18, 42, 19, 79, 20, 44, 16, 25, 17.
+
+Current element in the testing sequence: 18
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 42
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 19.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 79
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 20
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 44
+****Anomaly detected**** in the next element. HTM Engine predicted: 29 with similarity: 25%, actual value: 16.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 25
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 17
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 12.036666666666667%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 41, 24, 39, 16, 34, 15.
+
+Current element in the testing sequence: 41
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 24.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 46 with similarity: 33.33%, actual value: 16.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 34
+****Anomaly detected**** in the next element. HTM Engine predicted: 27 with similarity: 33.33%, actual value: 15.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 24.998333333333335%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 35, 66, 30, 41, 23, 18, 31.
+
+Current element in the testing sequence: 35
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 66
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 30
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 66.67%, actual value: 41.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 23
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 18
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 31
+End of sequence. Further anomaly testing cannot be continued.
+Average accuracy for this sequence: 9.524285714285714%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 45, 22, 28, 76, 36, 39, 25.
+
+Current element in the testing sequence: 45
+****Anomaly detected**** in the next element. HTM Engine predicted: 29 with similarity: 50%, actual value: 22.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 28
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 45.83%, actual value: 76.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 36
+No anomaly detected in the next element. HTM Engine found similarity: 8.33%.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 25.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 26.784285714285716%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 42, 26, 24, 56, 41, 45, 28, 16, 32.
+
+Current element in the testing sequence: 42
+****Anomaly detected**** in the next element. HTM Engine predicted: 46 with similarity: 29.17%, actual value: 26.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 24
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 56
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 41
+No anomaly detected in the next element. HTM Engine found similarity: 83.33%.
+Current element in the testing sequence: 45
+No anomaly detected in the next element. HTM Engine found similarity: 25%.
+Current element in the testing sequence: 28
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 45.83%, actual value: 16.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 32
+End of sequence. Further anomaly testing cannot be continued.
+Average accuracy for this sequence: 20.369999999999997%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 49, 20, 44, 16, 25, 17.
+
+Current element in the testing sequence: 49
+****Anomaly detected**** in the next element. HTM Engine predicted: 29 with similarity: 75%, actual value: 20.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 44
+****Anomaly detected**** in the next element. HTM Engine predicted: 29 with similarity: 25%, actual value: 16.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 25
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 17
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 16.666666666666668%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 28, 21, 45, 22, 29, 17, 23, 15.
+
+Current element in the testing sequence: 28
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 45.83%, actual value: 21.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 45
+****Anomaly detected**** in the next element. HTM Engine predicted: 29 with similarity: 45.83%, actual value: 22.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 29
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 62.5%, actual value: 17.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 23
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 15
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Average accuracy for this sequence: 19.27%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 32, 36, 29, 40, 33, 42, 35, 39, 30.
+
+Current element in the testing sequence: 32
+****Anomaly detected**** in the next element. HTM Engine predicted: 27 with similarity: 20.83%, actual value: 36.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 29
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 50%, actual value: 40.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 33
+****Anomaly detected**** in the next element. HTM Engine predicted: 27 with similarity: 33.33%, actual value: 42.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 35
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 30.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 20.832222222222224%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 30, 45, 22, 28, 56, 36, 39, 25.
+
+Current element in the testing sequence: 30
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 66.67%, actual value: 45.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 22
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 28
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 45.83%, actual value: 56.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 36
+No anomaly detected in the next element. HTM Engine found similarity: 8.33%.
+Current element in the testing sequence: 39
+****Anomaly detected**** in the next element. HTM Engine predicted: 47 with similarity: 83.33%, actual value: 25.
+Skipping to the next element in the testing sequence.
+Average accuracy for this sequence: 25.52%.
+------------------------------
+------------------------------
+
+Testing the sequence for anomaly detection: 42, 26, 24, 56, 41, 45, 28, 16, 32.
+
+Current element in the testing sequence: 42
+****Anomaly detected**** in the next element. HTM Engine predicted: 46 with similarity: 29.17%, actual value: 26.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 24
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 56
+Nothing predicted from HTM Engine. Anomaly detection failed.
+Current element in the testing sequence: 41
+No anomaly detected in the next element. HTM Engine found similarity: 83.33%.
+Current element in the testing sequence: 45
+No anomaly detected in the next element. HTM Engine found similarity: 25%.
+Current element in the testing sequence: 28
+****Anomaly detected**** in the next element. HTM Engine predicted: 31 with similarity: 45.83%, actual value: 16.
+Skipping to the next element in the testing sequence.
+Current element in the testing sequence: 32
+End of sequence. Further anomaly testing cannot be continued.
+Average accuracy for this sequence: 20.369999999999997%.
+------------------------------
