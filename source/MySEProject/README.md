@@ -22,47 +22,39 @@ To run this project,
 
 Our project is based on NeoCortex API. More details [here](https://github.com/ddobric/neocortexapi/blob/master/source/Documentation/gettingStarted.md).
 
-## Working Process
-
-Here is the working principle in a single graph to understand the steps to follow to execute and develop this project. [For more details click here]()
-
-```mermaid
-graph LR;
-    StartProject --> ExtractSequences;
-    ExtractSequences --> ConvertSequences;
-    ConvertSequences --> TrainModel;
-    TrainModel --> AnomalyDetection;
-    AnomalyDetection --> StoreOutput;
-```
-
 ## Details
 
-To train our HTM Engine, we used the [MultiSequenceLearning](https://github.com/ddobric/neocortexapi/blob/master/source/Samples/NeoCortexApiSample/MultisequenceLearning.cs) class in the NeoCortex API. Firstly, we will read and train the HTM Engine using the data from both our training (learning) and predicting (predictive) folders, which are present as numerical sequences in CSV files in the 'training' and 'predicting' folders inside the project directory. We will read numerical sequence data from the prediction folder for testing purposes, remove the first few elements (thus effectively turning the data into a subsequence of the original sequence; we have already inserted anomalies at random indexes into this data), and then use it to detect anomalies.
+To train our HTM Engine, we used the [MultiSequenceLearning](https://github.com/ddobric/neocortexapi/blob/master/source/Samples/NeoCortexApiSample/MultisequenceLearning.cs) class in the NeoCortex API. Firstly, we will read and train the HTM Engine using the data from both our training (learning) and predicting (predictive) folders, which are present as numerical sequences in CSV files in the 'training_sequence' and 'predicting_sequence' folders inside the project directory. We will read numerical sequence data from the prediction folder for testing purposes, remove the first few elements (thus effectively turning the data into a subsequence of the original sequence; we have already inserted anomalies at random indexes into this data), and then use it to detect anomalies.
 
 Please take note that all files inside the folders are read with the.csv extension, and exception handlers are set up in case the file format is incorrect.
 
-We are employing artificial integer sequence data of network load for this project, which is saved inside of CSV files and is rounded off to the nearest integer, in percentage. Example of a csv file within training folder.
+Our HTM Engine has been trained using the MultiSequenceLearning class in the NeoCortex API. The first step in training the HTM Engine will be 
+reading and utilizing data from our  `training_sequence` (learning) and `predicting_sequence` (predictive) folders, which are both present as numerical sequences in 
+JSON files in the `predicting_sequence` and `training_sequence` folders inside the project directory. 
+
+# Data format:
+For this project, we used two datasets from a weather dataset for Bangladesh. We took temperature of 20 days for different hours.
+
+Below we give our data sequences where the sequences are in JSON files. We keep our dataset in two individual folders which are `training_files` (for training data where 4 files) and `predicting_files` (for predicting data where also 4 files).  
+
+For example, an hourly sequence of weather temperature of a csv file within training [folder](https://github.com/almahamud1234/neocortexapi/tree/MatrixMasters/source/MySEProject/AnomalyDetectionSample/training_sequence).
 
 ```
-71,74,98,68,92,65,66,70,69,65
-71,74,75,68,72,65,66,30,69,35
-71,74,75,71,72,65,36,70,69,65
-71,75,75,71,72,65,66,70,98,95
+38, 40, 46, 29, 33, 27, 42, 47, 30, 31 
+46, 36, 39, 34, 43, 28, 32, 25, 45, 26 
+44, 36, 37, 41, 30, 47, 28, 33, 27, 42 
+37, 46, 26, 47, 44, 36, 29, 42, 38, 27 
+45, 47, 28, 35, 29, 37, 31, 40, 45, 25
 ```
-Normally, the values stay within the range of 65 to 75. All values outside of this range are considered anomalies for testing purposes. However, in order to identify anomalies, we have a csv file in the predicting folder. Typically, some of the data in this file does not fall within 65 and 75. 
+Our predicting datasets located in the `predicting_files` [folder](https://github.com/almahamud1234/neocortexapi/tree/MatrixMasters/source/MySEProject/AnomalyDetectionSample/predicting_sequence). sample of one data set is
 
 ```
-69,72,75,68,72,67,66,99,72,67
-69,72,75,68,72,67,66,90,69,97
-69,74,75,68,72,67,66,92,68,100
-69,74,75,68,72,67,66,10,68,85
-68,74,75,68,72,67,16,50,69,65
-71,74,75,68,72,97,66,70,69,85
+30, 18, 42, 19, 79, 20, 44, 16, 25, 17 
+19, 21, 3, 22, 41, 24, 39, 16, 34, 15 
+43, 32, 27, 35, 66, 30, 41, 23, 18, 31
+42, 16, 30, 45, 22, 28, 76, 36, 39, 25 
+37, 42, 26, 24, 56, 41, 45, 28, 16, 32
 ```
-We have uploaded the anomaly results of our data in this repository for reference.
-
-output result of combined numerical sequence data from training folder (without anomalies) and predicting folder (with anomalies) can be found [here](https://github.com/almahamud1234/neocortexapi/tree/MatrixMasters/source/MySEProject/AnomalyDetectionSample/output)
-
    
 ### Encoding:
 
@@ -175,10 +167,10 @@ foreach (var sequenceKeyPair in sequences){
 
 ## Execution of the project
 
+To run this project, use the following class/methods given in [Program.cs].
 
 Our project is carried out as follows.
  
-
 * At the beginning, we use the `ExtractSequencesFromFolder` method of the [`CsvSequenceFolder`](https://github.com/almahamud1234/neocortexapi/blob/MatrixMasters/source/MySEProject/AnomalyDetectionSample/CsvSequenceFolder.cs) class to read all files inside a folder. These classes maintain a list of numerical sequences from the read data for repeated future use. To handle non-numeric data, exception handling is incorporated within certain classes. Additionally, the `TrimSequences` technique allows data trimming by removing one to four components (numbers 1 through 4) from the start, returning a numeric sequence.
 
 ```csharp
@@ -224,9 +216,10 @@ In the end, we use the [`HTMAnomalyExperiment`](https://github.com/almahamud1234
 
 ```csharp
 .....
-var testSequences = LoadTestSequences(_testingDataPath);
-string outputFilePath = PrepareOutputFile();
-var (allTestingData, allAnomalyIndices, results) = DetectAnomalies(trainedPredictor, testSequences);
+ allTestingData.Add(sequence.ToArray());
+var (log, anomalies) = DetectAnomalyOnSequence(predictor, sequence.ToArray(), _tolerance);
+experimentResults.AddRange(log);
+allAnomalyIndices.Add(anomalies);
 .....
 ```
 The path to the training and predicting folders is set as the default and passed through the constructor, or it can be manually set within the class.
@@ -256,48 +249,89 @@ We can obtain our prediction in a list of results in the format of `NeoCortexApi
 ```csharp
 var res = predictor.Predict(item);
 ```
-We get the following output.
-```
-S2_2-9-10-7-11-8-1 - 100
-S1_1-2-3-4-2-5-0 - 5
-S1_-1.0-0-1-2-3-4 - 0
-S1_-1.0-0-1-2-3-4-2 - 0
-```
-We know that the item we passed here is 8. The first line gives us the best prediction along with its similarity accuracy. By using basic string operations, we can easily extract the predicted value that will come after 8 (in this case, it is 1), and the previous value (which is 11 in this case). This allows us to retrieve the required values for further analysis or processing.
-We will then use this to detect anomalies.
 
-* When we iteratively pass values to the `DetectAnomaly` method using our sliding window approach, we won't be able to detect an anomaly in the first element. Therefore, at the beginning, we use the second element of the list to predict and compare it with the previous element (which is the first element). A flag is set to control the command execution: if the first element is detected as an anomaly, we will skip it and directly start from the second element. Otherwise, we begin the anomaly detection process from the first element as usual.
-
-* Now, as we traverse the list one by one to the right, we pass each value to the predictor to get the next predicted value and compare it with the actual value. If an anomaly is detected, it is outputted to the user, and the anomalous element is skipped. Upon reaching the last element in the list, the traversal ends, and we move on to the next list for further processing.
-
-We use anomalyscore (difference ratio) for comparison with our already preset threshold. When it exceeds, probable anomalies are found. [Code]()
-
-To run this project, use the following class/methods given in [Program.cs].
+Normally output from HTM is in the following format when we pass a numerical value 14 for example:
 
 ```csharp
-HTMAnomalyExperiment tester = new HTMAnomalyExperiment();
-tester.ExecuteExperiment();
+S3_11-5-12-10-14-13 - 100
+S1_5-6-16-10-4-11-7 - 5
+.....
 ```
- 
+The first line has the best prediction which the HTM model predicts, with accuracy. We can easily derive the predicted value, which will come after 14 (in this case, it is 13). The string operations are used to get these values. Later we are going to use this to determine anomalies.
+```csharp
+if (i < sequence.Length - 1)
+    {
+         int nextIndex = i + 1;
+         double nextItem = sequence[nextIndex];
+         double predictedNextItem = double.Parse(tokens2.Last());
+
+         var anomalyScore = Math.Abs(predictedNextItem - nextItem);
+         var deviation = anomalyScore / nextItem;
+
+         if (deviation <= tolerance)
+            {
+              resultOutputLines.Add($"No anomaly detected in the next element. HTM Engine found similarity: {similarity}%.");
+              currentAccuracy += similarity;
+            }
+         else
+            {
+              resultOutputLines.Add($"****Anomaly detected**** in the next element. HTM Engine predicted: {predictedNextItem} with similarity: {similarity}%, actual value: {nextItem}.");
+              anomalousIndex.Add(i + 1);
+              i++; // Skip the anomalous element
+              resultOutputLines.Add("Skipping to the next element in the testing sequence.");
+              currentAccuracy += similarity;
+            }
+    }
+```
+
+We are using AnomalyScore, which is nothing, but the absolute value of the ratio of differences between HTM´s predicted number and actual number. If the ratio exceeds tolerancevalue, we mark it as an anomaly, otherwise, it is not. When an anomaly is detected, we skip that element in the list (we did not pass that value to HTM in the loop).
+
+We use accuracyPerList to record accuracy per numerical sequence tested. recordAccuracy is collected from inside each loop run, which indicates HTM model´s accuracy. We also add index positions of anomalies to anomalyIndices, when we encounter indices of anomalies in loop. totalAccuracy and listCount is used to calculate average accuracy of the whole experiment.
+
+```csharp
+StoredOutputValues.totalAvgAccuracy = _totalAccuracy / Math.Max(_iterationCount, 1);
+```
+
+The SequenceVisualizer [class](https://github.com/almahamud1234/neocortexapi/blob/MatrixMasters/source/MySEProject/AnomalyDetectionSample/SequenceVisualizer.cs) is used to plot graphs of sequences of data and their anomalies. This class used to showing the visual result for detecting anomalies comparing to training sequences and the predicting sequence.
+
+```csharp
+public static void CreateGraphForSequences(List<double[]> allLearnedData, List<double[]> allTestingData)
+.....
+allGraphs.Add(actualGraph);
+allGraphs.Add(learnedGraph);
+.....
+var chart = Chart.Plot(allGraphs);
+```
+
+## Unit Tests
+
+We have developed a unit tests project to test different functionality of this anomaly project. During implemeted the unit tests, we ensured the behavior of detection of anomalies in the project. Project files for the units test can be found [here](https://github.com/almahamud1234/neocortexapi/blob/MatrixMasters/source/MySEProject/AnomalyDetectionSample.Tests/HTMAnomalyExperimentTests.cs)
+
+![Image](https://github.com/user-attachments/assets/e74a54b5-fe1d-4a40-b50b-b84692decdc9)
+
 ## Results
 
-After running this project, we got the following [Output]()
+Once the experiment concludes, the anomaly detection results are persisted to the screen, along with HTM accuracy for each individual number sequences and overall HTM accuracy for the whole experiment. We have uploaded the anomaly results of our data in this repository for reference. output result of combined numerical sequence data from training folder (without anomalies) and predicting folder (with anomalies) can be found [here](https://github.com/almahamud1234/neocortexapi/tree/MatrixMasters/source/MySEProject/AnomalyDetectionSample/output)
 
-We found Anomaly detection results for Testing the sequence: 54, 98, 48, 92,
-45, 46, 50, 49, 45
+# Graphical view
+
+We shown the graphical view of the training and predicting sequences along with anomalies. After successfully running the projects, we are generating the plots in html format in the browser as well as saving the files in the output graph [folder](https://github.com/almahamud1234/neocortexapi/tree/MatrixMasters/source/MySEProject/AnomalyDetectionSample/output/graph). We generated 2 kind of plots
+
+1. Training and preicting sequence plot
+![Image](https://github.com/user-attachments/assets/0926d42e-52fd-4abb-a505-f331dc5e245f)
+
+3. Training and preicting sequence with anomalies plot
+![Image](https://github.com/user-attachments/assets/24943024-cb4c-498a-bbf3-8043b8e9190d)
+
+We found Anomaly detection results for Testing the sequence: 30, 18, 42, 19, 79, 20, 44, 16, 25, 17 
 
 FNR = FN / (FN + TP) = 0/ (0+2) = 0
-
 FPR = FP / (FP + TN) = 2/ (2+5) = 0.29
-
 Where, FN = 0, FP = 2, TN = 5, TP = 2.
 
-After running our sample project, we analyzed the
-rawOutput_20240324_230100.txt from output folder of this
-experiment and got the following average results:
+After running our sample project, we analyzed the output folder of this experiment and got the following average results:
 
 • Average FNR of the experiment: 0.22
-
 • Average FPR of the experiment: 0.28
 
 We can observe that the False Negative Rate(FNR) is in our output (0.22). It is desired that the false negative rate should be as lower as possible in an anomaly detection program. Lower false positive rate is also desirable, but not absolutely essential.
