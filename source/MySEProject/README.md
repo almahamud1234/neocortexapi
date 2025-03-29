@@ -35,7 +35,7 @@ JSON files in the `predicting_sequence` and `training_sequence` folders inside t
 # Data format:
 For this project, we used two datasets from a weather dataset for Bangladesh. We took temperature of 20 days for different hours.
 
-Below we give our data sequences where the sequences are in JSON files. We keep our dataset in two individual folders which are `training_files` (for training data where 4 files) and `predicting_files` (for predicting data where also 4 files).  
+Below we give our data sequences where the sequences are in JSON files. We keep our dataset in two individual folders which are `training_sequence` (for training data where 4 files) and `predicting_sequence` (for predicting data where also 4 files).  
 
 For example, an hourly sequence of weather temperature of a csv file within training [folder](https://github.com/almahamud1234/neocortexapi/tree/MatrixMasters/source/MySEProject/AnomalyDetectionSample/training_sequence).
 
